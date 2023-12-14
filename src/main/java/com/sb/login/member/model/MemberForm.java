@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class MemberForm {
     @Size(min = 3, max = 25)
     @NotBlank(message = "사용자ID는 필수항목입니다.")

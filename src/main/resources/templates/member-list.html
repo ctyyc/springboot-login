@@ -7,20 +7,27 @@
             <th>이름</th>
             <th>이메일</th>
             <th>등록일시</th>
+            <th>편집</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="member, loop : ${memberList}">
             <td th:text="${loop.count}"></td>
-            <td>
-                <a th:href="@{|/member/detail/${member.id}|}" th:text="${member.memberName}"></a>
-            </td>
-<!--            <td th:text="${member.memberName}"></td>-->
+            <td th:text="${member.memberName}"></td>
             <td th:text="${member.email}"></td>
             <td th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+                <a th:href="@{|/member/modify/${member.id}|}" class="delete btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${#authentication.getPrincipal().getUsername() == member.memberName}"
+                   th:text="수정"></a>
+                <a th:href="@{|/member/delete/${member.id}|}" class="delete btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${#authentication.getPrincipal().getUsername() == member.memberName}"
+                   th:text="삭제"></a>
+            </td>
         </tr>
         </tbody>
     </table>
-<!--    <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>-->
 </div>
 </html>

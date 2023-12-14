@@ -25,6 +25,7 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/list")
     public String list(Model model) {
         List<MemberDto> memberDtoList = this.memberService.getList();
@@ -32,12 +33,13 @@ public class MemberController {
         return "member-list";
     }
 
-    @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Long id, MemberForm memberForm) {
-        MemberDto memberDto = this.memberService.getMember(id);
-        model.addAttribute("member", memberDto);
-        return "member-detail";
-    }
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping(value = "/detail/{id}")
+//    public String detail(Model model, @PathVariable("id") Long id, MemberForm memberForm) {
+//        MemberDto memberDto = this.memberService.getMember(id);
+//        model.addAttribute("member", memberDto);
+//        return "member-detail";
+//    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
@@ -71,7 +73,7 @@ public class MemberController {
 
         this.memberService.modify(memberForm, id);
 
-        return String.format("redirect:/member/detail/%s", id);
+        return "redirect:/member/list";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -82,7 +84,8 @@ public class MemberController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }
         this.memberService.delete(id);
-        return "redirect:/";
+
+        return "redirect:/member/logout";
     }
 
     @GetMapping("/login")

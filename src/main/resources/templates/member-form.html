@@ -4,8 +4,8 @@
     <form th:object="${memberForm}" method="post">
         <div th:replace="~{form-errors :: formErrorsFragment}"></div>
         <div class="mb-3">
-<!--            <label for="memberName" class="form-label">사용자ID</label>-->
-            <input type="hidden" th:field="*{memberName}" class="form-control">
+            <label for="memberName" class="form-label">사용자ID (변경 불가)</label>
+            <input type="text" th:field="*{memberName}" class="form-control" readonly>
         </div>
         <div class="mb-3">
             <label for="password1" class="form-label">비밀번호</label>
